@@ -8,7 +8,7 @@ import (
 func New(environment string) *zap.Logger {
 	var config zap.Config
 
-	if environment == "prod" {
+	if environment == "production" {
 		config = zap.NewProductionConfig()
 		config.EncoderConfig.TimeKey = "timestamp"
 		config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder

@@ -14,6 +14,7 @@ WORKDIR /app
 RUN mkdir -p /app/data
 
 COPY --from=builder /app/main .
+COPY .env.production .env.production
 
 EXPOSE 8080
 VOLUME ["/app/data"]

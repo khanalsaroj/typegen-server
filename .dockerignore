@@ -8,7 +8,6 @@
 
 # Environment files
 .env.dev
-.env.production
 
 # Database
 data/
