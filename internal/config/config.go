@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/spf13/viper"
@@ -107,7 +108,7 @@ func setDefaults(v *viper.Viper) {
 }
 
 func getEnv(key, fallback string) string {
-	if value := viper.GetString(key); value != "" {
+	if value := os.Getenv(key); value != "" {
 		return value
 	}
 	return fallback
