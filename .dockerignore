@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+
+# Environment files
+.env.dev
+.env.production
+
+# Database
+data/
+# Documentation
+README.md
+docs/
+
+# Go
+*.test
+*.out
+
+# CI/CD
+.github/
+
+# Docker
+Dockerfile
+.dockerignore
