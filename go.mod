@@ -17,7 +17,6 @@ require (
 
 require (
 	github.com/denisenkom/go-mssqldb v0.12.3
-	github.com/godror/godror v0.50.0
 )
 
 require (
