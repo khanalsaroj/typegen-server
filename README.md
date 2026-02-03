@@ -37,7 +37,7 @@ runtime validation.
 
 ## ✨ Features
 
-- **Current Support Database Connection**: MySQL/Mariadb and PostgreSQL.
+- **Current Support Database Connection**: MySQL/Mariadb, MSSQL, and PostgreSQL.
 - **Code Generation**:
     - **Typescript**: DTOs and Zod schemas.
     - **Java**: Records and DTOs.
