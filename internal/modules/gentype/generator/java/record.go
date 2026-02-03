@@ -47,12 +47,17 @@ func (d *Record) Generate(rows *sql.Rows, req domain.TypeRequest, tbN string, db
 			return "", err
 		}
 
-		// Map DB type → Java type
 		var javaType string
-		if dbType == "mysql" {
+
+		switch strings.ToLower(dbType) {
+		case "mysql":
 			javaType = mapMySQLToJavaType(dataType)
-		} else {
+		case "postgres":
 			javaType = mapPostgresToJavaType(dataType)
+		case "mssql":
+			javaType = mapMSSQLToJavaType(dataType)
+		default:
+			javaType = "any"
 		}
 
 		fieldName := common.ToCamelCase(columnName)

@@ -65,10 +65,15 @@ func (r *Dto) Generate(rows *sql.Rows, info domain.TypeRequest, tbN string, dbTy
 
 		var tsType string
 
-		if dbType == "mysql" {
+		switch strings.ToLower(dbType) {
+		case "mysql":
 			tsType = mapMySQLToTSType(dataType)
-		} else {
+		case "postgres":
 			tsType = mapPostgresqlToTSType(dataType)
+		case "mssql", "sqlserver", "sql_server":
+			tsType = mapMSSQLToTSType(dataType)
+		default:
+			tsType = "any"
 		}
 
 		optional := ""
@@ -175,6 +180,33 @@ func mapMySQLToTSType(mysqlType string) string {
 	case "boolean", "bit":
 		return "boolean"
 
+	default:
+		return "any"
+	}
+}
+
+func mapMSSQLToTSType(mssqlType string) string {
+	switch strings.ToLower(mssqlType) {
+	case "int", "bigint", "smallint", "tinyint",
+		"decimal", "numeric", "float", "real",
+		"money", "smallmoney":
+		return "number"
+	case "varchar", "nvarchar", "char", "nchar", "text", "ntext":
+		return "string"
+	case "datetime", "datetime2", "smalldatetime", "date", "time", "datetimeoffset":
+		return "string | Date"
+	case "bit":
+		return "boolean"
+	case "binary", "varbinary", "image":
+		return "Uint8Array"
+	case "uniqueidentifier":
+		return "string"
+	case "xml":
+		return "string"
+	case "sql_variant", "hierarchyid", "geometry", "geography":
+		return "any"
+	case "rowversion", "timestamp":
+		return "Uint8Array"
 	default:
 		return "any"
 	}

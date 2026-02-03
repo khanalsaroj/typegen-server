@@ -49,10 +49,15 @@ func (z Zod) Generate(rows *sql.Rows, req domain.TypeRequest, tbN string, dbType
 		}
 
 		var zodType string
-		if dbType == "mysql" {
+		switch strings.ToLower(dbType) {
+		case "mysql":
 			zodType = mapMySQLToZod(dataType)
-		} else {
+		case "postgres":
 			zodType = mapPostgresToZod(dataType)
+		case "mssql":
+			zodType = mapMSSQLToZod(dataType)
+		default:
+			zodType = "any"
 		}
 
 		fieldName := common.ToCamelCase(columnName)
@@ -181,6 +186,31 @@ func mapPostgresToZod(pgType string) string {
 	case "enum":
 		return "enum([])"
 
+	default:
+		return "string()"
+	}
+}
+
+func mapMSSQLToZod(mssqlType string) string {
+	switch strings.ToLower(mssqlType) {
+	case "int", "bigint", "smallint", "tinyint",
+		"decimal", "numeric", "float", "real",
+		"money", "smallmoney":
+		return "number()"
+	case "varchar", "nvarchar", "char", "nchar", "text", "ntext":
+		return "string()"
+	case "datetime", "datetime2", "smalldatetime", "date", "time", "datetimeoffset":
+		return "date()"
+	case "bit":
+		return "bool()"
+	case "binary", "varbinary", "image", "rowversion", "timestamp":
+		return "instanceof(Uint8Array)"
+	case "uniqueidentifier":
+		return "string().uuid()"
+	case "xml":
+		return "string()"
+	case "sql_variant", "hierarchyid", "geometry", "geography":
+		return "any()"
 	default:
 		return "string()"
 	}

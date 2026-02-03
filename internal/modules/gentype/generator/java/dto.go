@@ -73,12 +73,17 @@ func (d *Dto) Generate(rows *sql.Rows, req domain.TypeRequest, tbN string, dbTyp
 			return "", err
 		}
 
-		var tsType string
+		var javaType string
 
-		if dbType == "mysql" {
-			tsType = mapMySQLToJavaType(dataType)
-		} else {
-			tsType = mapPostgresToJavaType(dataType)
+		switch strings.ToLower(dbType) {
+		case "mysql":
+			javaType = mapMySQLToJavaType(dataType)
+		case "postgres":
+			javaType = mapPostgresToJavaType(dataType)
+		case "mssql":
+			javaType = mapMSSQLToJavaType(dataType)
+		default:
+			javaType = "any"
 		}
 
 		fieldName := common.ToCamelCase(columnName)
@@ -95,7 +100,7 @@ func (d *Dto) Generate(rows *sql.Rows, req domain.TypeRequest, tbN string, dbTyp
 
 		sb.WriteString(fmt.Sprintf(
 			"    private %s %s;\n",
-			tsType,
+			javaType,
 			fieldName,
 		))
 		if opt.ExtraSpacing {
@@ -212,6 +217,58 @@ func mapPostgresToJavaType(pgType string) string {
 
 	case "enum":
 		return "String"
+
+	default:
+		return "Object"
+	}
+}
+
+func mapMSSQLToJavaType(mssqlType string) string {
+	switch strings.ToLower(mssqlType) {
+
+	case "int":
+		return "Integer"
+	case "bigint":
+		return "Long"
+	case "smallint":
+		return "Short"
+	case "tinyint":
+		return "Short"
+
+	case "decimal", "numeric":
+		return "java.math.BigDecimal"
+	case "float", "real":
+		return "Double"
+
+	case "money", "smallmoney":
+		return "java.math.BigDecimal"
+
+	case "varchar", "nvarchar", "char", "nchar", "text", "ntext":
+		return "String"
+
+	case "date":
+		return "java.time.LocalDate"
+	case "time":
+		return "java.time.LocalTime"
+	case "datetime", "datetime2", "smalldatetime":
+		return "java.time.LocalDateTime"
+	case "datetimeoffset":
+		return "java.time.OffsetDateTime"
+
+	case "bit":
+		return "Boolean"
+
+	case "binary", "varbinary", "image", "rowversion", "timestamp":
+		return "byte[]"
+
+	case "uniqueidentifier":
+		return "java.util.UUID"
+
+	case "xml":
+		return "String"
+
+	case "sql_variant", "hierarchyid", "geometry", "geography":
+		return "Object"
 
 	default:
 		return "Object"

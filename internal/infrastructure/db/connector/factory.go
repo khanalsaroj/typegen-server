@@ -2,7 +2,9 @@ package connector
 
 import (
 	"errors"
+
 	"github.com/khanalsaroj/typegen-server/internal/domain"
+	"github.com/khanalsaroj/typegen-server/internal/infrastructure/db/mssql"
 	"github.com/khanalsaroj/typegen-server/internal/infrastructure/db/mysql"
 	"github.com/khanalsaroj/typegen-server/internal/infrastructure/db/postgres"
 )
@@ -13,6 +15,8 @@ func New(req domain.DatabaseConnectionInfo) (DBConnector, error) {
 		return &mysql.Connector{}, nil
 	case "postgres":
 		return &postgres.Connector{}, nil
+	case "mssql":
+		return &mssql.Connector{}, nil
 	default:
 		return nil, errors.New("unsupported database")
 	}
