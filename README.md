@@ -241,7 +241,7 @@ docker pull ghcr.io/khanalsaroj/typegen-server:latest
 > Its available fields differ depending on the chosen `language` and `style`, as each combination exposes its own
 > configuration options.
 > For the full list of supported options, see the
-> documentation [here](https://github.com/khanalsaroj/typegen-dashboard).
+> documentation [here](https://github.com/khanalsaroj/typegen-ui).
 
 ```json
 {
