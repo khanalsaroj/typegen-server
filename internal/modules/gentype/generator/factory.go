@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/khanalsaroj/typegen-server/internal/domain"
+	"github.com/khanalsaroj/typegen-server/internal/modules/gentype/generator/csharp"
 	"github.com/khanalsaroj/typegen-server/internal/modules/gentype/generator/java"
 	"github.com/khanalsaroj/typegen-server/internal/modules/gentype/generator/typescript"
 )
@@ -32,7 +33,15 @@ func NewGenerator(req domain.TypeRequest) (Generator, error) {
 		default:
 			return nil, fmt.Errorf("unsupported typescript type: %s", req.Style)
 		}
-	default:
-		return nil, fmt.Errorf("unsupported language: %s", req.TargetLanguage)
+	case "csharp":
+		switch style {
+		case "dto":
+			return &csharp.Dto{}, nil
+		case "record":
+			return &csharp.Record{}, nil
+		default:
+			return nil, fmt.Errorf("unsupported csharp type: %s", req.Style)
+		}
 	}
+	return nil, fmt.Errorf("unsupported language type: %s", req.Style)
 }

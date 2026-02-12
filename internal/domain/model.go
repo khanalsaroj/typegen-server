@@ -86,6 +86,24 @@ type RecordOptions struct {
 	ExtraSpacing       bool `json:"extraSpacing,omitempty"`
 }
 
+type CSharpDtoOptions struct {
+	ExtraSpacing        bool `json:"extraSpacing,omitempty"`
+	CamelCaseProperties bool `json:"camelCaseProperties,omitempty"`
+	Nullable            bool `json:"nullable,omitempty"`
+	Getter              bool `json:"getter,omitempty"`
+	Setter              bool `json:"setter,omitempty"`
+	JsonPropertyName    bool `json:"jsonPropertyName,omitempty"`
+}
+
+type CSharpRecordOptions struct {
+	CamelCaseProperties bool `json:"camelCaseProperties,omitempty"`
+	ExtraSpacing        bool `json:"extraSpacing,omitempty"`
+	Nullable            bool `json:"nullable,omitempty"`
+	JsonPropertyName    bool `json:"jsonPropertyName,omitempty"`
+	Positional          bool `json:"positional,omitempty"`
+	WithInit            bool `json:"withInit,omitempty"`
+}
+
 type MyBatisOptions struct {
 	AllCrud bool `json:"allCrud"`
 	Select  bool `json:"select"`
