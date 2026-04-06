@@ -104,6 +104,70 @@ type CSharpRecordOptions struct {
 	WithInit            bool `json:"withInit,omitempty"`
 }
 
+type GoStructAdvancedOptions struct {
+	JsonTags         bool `json:"jsonTags"`
+	OmitEmpty        bool `json:"omitempty"`
+	PointerFields    bool `json:"pointerFields"`
+	ExportFields     bool `json:"exportFields"`
+	Comments         bool `json:"comments"`
+	ValidateTags     bool `json:"validateTags"`
+	DBTags           bool `json:"dbTags"`
+	MapstructureTags bool `json:"mapstructureTags"`
+	ExtraSpacing     bool `json:"extraSpacing"`
+}
+
+type PythonDataclassOptions struct {
+	OptionalFields bool `json:"optionalFields"`
+	Comments       bool `json:"comments"`
+	Docstrings     bool `json:"docstrings"`
+	ExtraSpacing   bool `json:"extraSpacing"`
+
+	DefaultValues bool `json:"defaultValues"`
+	Frozen        bool `json:"frozen"`
+	Slots         bool `json:"slots"`
+	KwOnly        bool `json:"kwOnly"`
+	Order         bool `json:"order"`
+	Repr          bool `json:"repr"`
+	Eq            bool `json:"eq"`
+	UnsafeHash    bool `json:"unsafeHash"`
+}
+
+type PythonPydanticOptions struct {
+	OptionalFields bool `json:"optionalFields"`
+	Comments       bool `json:"comments"`
+	Docstrings     bool `json:"docstrings"`
+	ExtraSpacing   bool `json:"extraSpacing"`
+
+	DefaultValues              bool `json:"defaultValues"`
+	OrmMode                    bool `json:"ormMode"`
+	Validation                 bool `json:"validation"`
+	AliasGenerator             bool `json:"aliasGenerator"`
+	AllowPopulationByFieldName bool `json:"allowPopulationByFieldName"`
+	UseEnumValues              bool `json:"useEnumValues"`
+	StrictTypes                bool `json:"strictTypes"`
+	ArbitraryTypesAllowed      bool `json:"arbitraryTypesAllowed"`
+}
+
+type PythonClassOptions struct {
+	OptionalFields bool `json:"optionalFields"`
+	Comments       bool `json:"comments"`
+	Docstrings     bool `json:"docstrings"`
+	ExtraSpacing   bool `json:"extraSpacing"`
+
+	DefaultValues bool `json:"defaultValues"`
+	InitMethod    bool `json:"initMethod"`
+	ReprMethod    bool `json:"reprMethod"`
+	EqMethod      bool `json:"eqMethod"`
+}
+
+type PythonTypedDictOptions struct {
+	OptionalFields bool `json:"optionalFields"`
+	Comments       bool `json:"comments"`
+	Docstrings     bool `json:"docstrings"`
+	ExtraSpacing   bool `json:"extraSpacing"`
+
+	Total bool `json:"total"`
+}
 type MyBatisOptions struct {
 	AllCrud bool `json:"allCrud"`
 	Select  bool `json:"select"`
