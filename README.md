@@ -42,6 +42,8 @@ runtime validation.
     - **Typescript**: DTOs and Zod schemas.
     - **Java**: Records and DTOs.
     - **Mappers**: Java XML and Annotation-based mappers.
+    - **Go**: Structs
+    - **Python**: Pydantic models, dataclasses, TypedDicts, and plain classes
 - **Security**: Rate limiting, and CORS support.
 - **Health Monitoring**: Integrated health check endpoints.
 
