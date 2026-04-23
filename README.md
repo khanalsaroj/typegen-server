@@ -57,29 +57,59 @@ Pre-built Docker images are available for this project and can be pulled from th
 docker pull ghcr.io/khanalsaroj/typegen-server:latest
 ```
 
-## 📂 Project Structure
+## 🚀 Quick Start with Docker Compose
 
-```text
-├── cmd/
-│   └── api/                # Application entry point
-├── data/                   # SQLite database files
-├── internal/
-│   ├── config/             # Configuration loading (Viper)
-│   ├── domain/             # Domain models and interfaces
-│   ├── infrastructure/     # DB connectors (MySQL, Postgres)
-│   ├── middleware/         # Gin middlewares (CORS, Logger, Rate Limit)
-│   ├── modules/            # Business logic by module
-│   │   ├── connection/     # Connection management
-│   │   ├── gentype/        # Type generation logic
-│   │   ├── health/         # Health check logic
-│   │   └── mapper/         # Mapper generation logic
-│   ├── pkg/                # Shared utilities (Crypto, Logger, Response)
-│   ├── query/              # SQL queries
-│   └── server/             # HTTP server setup and routing
-├── .env.dev                # Development environment variables
-├── Dockerfile              # Multi-stage Docker build
-└── go.mod                  # Go module definition
+The simplest way to run both the **backend** and **frontend** together is using Docker Compose.
+
+Create a `docker-compose.yml` file with the following content:
+
+```yaml
+services:
+  frontend:
+    image: ghcr.io/khanalsaroj/typegen-ui:latest
+    container_name: typegen-frontend
+    ports:
+      - "7359:80"
+    environment:
+      - API_UPSTREAM=typegen-backend
+    networks:
+      - bridge-net
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/khanalsaroj/typegen-server:latest
+    container_name: typegen-backend
+    ports:
+      - "8049:8080"
+    environment:
+      - APP_ENV=production
+    volumes:
+      - typegen-backend:/app/data
+    networks:
+      - bridge-net
+    restart: unless-stopped
+
+networks:
+  bridge-net:
+    driver: bridge
+
+volumes:
+  typegen-backend:
 ```
+
+Then start both services in detached mode:
+
+```bash
+docker compose up -d
+```
+
+Once running, the services will be available at:
+
+| Service  | URL                      |
+|:---------|:-------------------------|
+| Frontend | http://localhost:7359    |
+| Backend  | http://localhost:8049    |
+
 
 ## 🌐 API Endpoints (Summary)
 
